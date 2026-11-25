@@ -54,9 +54,22 @@ h2{font-size:clamp(28px,4.6vw,54px);max-width:18ch;margin-bottom:16px}
 .acts .btn{padding:9px 20px;font-size:14px;background:hsl(var(--h) 100% 70%)}
 .acts a:not(.btn){font-size:14px;color:var(--dim);border-bottom:1px solid var(--line)}
 .acts a:not(.btn):hover{color:var(--ink)}
-.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:40px}
-.stack h3{font-size:18px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-.stack .chips{gap:10px}.stack .chips span{font-size:15px;padding:7px 14px}
+
+/* Stack section */
+#stack{padding-block:clamp(56px,8vw,96px)}
+#stack .lead{margin-bottom:32px}
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
+.scard{padding:24px}
+.scard>*{position:relative}
+.scard:after{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,hsl(var(--h) 100% 78%/.6),transparent);pointer-events:none}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:hsl(var(--h) 100% 72%);background:hsl(var(--h) 80% 50%/.12);border:1px solid hsl(var(--h) 80% 60%/.28)}
+.ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ix{font:500 13px Unbounded,Geist,sans-serif;color:var(--dim)}
+.scard h3{font-size:19px;margin-bottom:6px}
+.scard p{color:var(--dim);font-size:15px;margin-bottom:20px}
+.scard .chips{margin-top:auto}
+
 .cr{display:grid;grid-template-columns:minmax(130px,230px) 1fr;gap:8px 40px;padding:28px 0;border-top:1px solid var(--line)}
 .cr:last-child{border-bottom:1px solid var(--line)}
 .cr b{font:500 15px Geist,sans-serif;color:var(--dim)}
@@ -82,7 +95,7 @@ footer{border-top:1px solid var(--line);padding:28px max(20px,4vw) max(28px,env(
     <p class="live">Open to software and backend internships</p>
     <p class="tag">Engineering systems built to last.</p>
     <p class="sub">First-year B.Tech CSE '30 at Dayananda Sagar University, Bengaluru. I build Python backends, web apps and AI tools.</p>
-    <div class="row"><a class="btn" href="#work">See my work</a><a class="btn ghost" href="https://github.com/vineetinamdarr" target="_blank" rel="noopener">GitHub</a></div>
+    <div class="row"><a class="btn" href="#work">See my work</a></div>
   </div>
   <p class="hint">Drag through the name.</p>
 </header>
@@ -119,9 +132,33 @@ footer{border-top:1px solid var(--line);padding:28px max(20px,4vw) max(28px,env(
   <h2>What I build with</h2>
   <p class="lead">Computer science fundamentals applied to clean backends, relational data and automated pipelines.</p>
   <div class="stack">
-    <div><h3>Languages</h3><div class="chips"><span>Python (primary)</span><span>C (basic)</span><span>JavaScript</span><span>HTML5 and CSS3</span></div></div>
-    <div><h3>Backend and data</h3><div class="chips"><span>FastAPI</span><span>SQLAlchemy</span><span>PostgreSQL (Neon)</span></div></div>
-    <div><h3>Workflow</h3><div class="chips"><span>Git and GitHub</span><span>Render</span><span>GitHub Pages</span><span>VS Code</span><span>Linux CLI</span></div></div>
+    <article class="card scard" style="--h:180">
+      <div class="sh">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></span>
+        <span class="ix">01</span>
+      </div>
+      <h3>Languages</h3>
+      <p>Core programming, scripting, and interactive browser UIs.</p>
+      <div class="chips"><span>Python (primary)</span><span>C (basic)</span><span>JavaScript</span><span>HTML5 and CSS3</span></div>
+    </article>
+    <article class="card scard" style="--h:290">
+      <div class="sh">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+        <span class="ix">02</span>
+      </div>
+      <h3>Backend and data</h3>
+      <p>Async REST APIs, ORM modeling, and serverless Postgres.</p>
+      <div class="chips"><span>FastAPI</span><span>SQLAlchemy</span><span>PostgreSQL (Neon)</span></div>
+    </article>
+    <article class="card scard" style="--h:42">
+      <div class="sh">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10"/><path d="M18 11c0 3-3 4-12 6"/></svg></span>
+        <span class="ix">03</span>
+      </div>
+      <h3>Workflow</h3>
+      <p>Version control, cloud deployment, and daily dev environment.</p>
+      <div class="chips"><span>Git and GitHub</span><span>Render</span><span>GitHub Pages</span><span>VS Code</span><span>Linux CLI</span></div>
+    </article>
   </div>
 </section>
 
@@ -143,7 +180,7 @@ footer{border-top:1px solid var(--line);padding:28px max(20px,4vw) max(28px,env(
   <div class="row"><a class="btn" href="https://github.com/vineetinamdarr" target="_blank" rel="noopener">GitHub</a><a class="btn ghost" href="https://linkedin.com/in/vineetinamdarr" target="_blank" rel="noopener">LinkedIn</a></div>
 </section>
 
-<footer><span>© 2026 Vineet Inamdar. B.Tech CSE '30, Dayananda Sagar University.</span><span>vineetinamdar.xyz</span></footer>
+<footer><span>© 2026 Vineet Inamdar. B.Tech CSE '30, Dayananda Sagar University.</span></footer>
 
 <script>
 (()=>{
