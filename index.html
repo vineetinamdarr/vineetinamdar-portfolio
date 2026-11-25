@@ -76,10 +76,97 @@
       height: 2px;
       width: 0%;
       background: linear-gradient(90deg, var(--accent), var(--soft));
-      box-shadow: 0 0 8px rgba(197, 121, 75, 0.6);
+      box-shadow: 0 0 10px rgba(197, 121, 75, 0.7);
       z-index: 1000;
       pointer-events: none;
       transition: width 0.08s linear;
+    }
+
+    /* ==========================================================================
+       PERSISTENT ATMOSPHERIC BACKDROP FOR LOWER SCROLLABLE SECTIONS
+       ========================================================================== */
+    .portfolio-backdrop {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .portfolio-backdrop.is-visible {
+      opacity: 1;
+    }
+
+    .backdrop-plate {
+      position: absolute;
+      inset: -50px;
+      background-image: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261123_061140_af2262a5-c52c-472a-be3c-ccfbdf621c3a.png&w=1344&q=85");
+      background-size: cover;
+      background-position: center;
+      filter: blur(28px);
+      -webkit-filter: blur(28px);
+      opacity: 0.16;
+      transform: scale(1.08);
+      will-change: transform;
+    }
+
+    .backdrop-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(18, 17, 16, 0.45) 0%, rgba(18, 17, 16, 0.88) 70%, #121110 100%),
+                  linear-gradient(to bottom, #121110 0%, transparent 15%, transparent 85%, #121110 100%);
+    }
+
+    .backdrop-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .glow-1 {
+      width: 720px;
+      height: 720px;
+      top: 5%;
+      left: 5%;
+      background: radial-gradient(circle, rgba(197, 121, 75, 0.14) 0%, transparent 68%);
+      filter: blur(85px);
+      animation: driftGlow1 16s ease-in-out infinite alternate;
+    }
+
+    .glow-2 {
+      width: 860px;
+      height: 860px;
+      bottom: 5%;
+      right: 5%;
+      background: radial-gradient(circle, rgba(93, 56, 39, 0.18) 0%, transparent 70%);
+      filter: blur(95px);
+      animation: driftGlow2 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftGlow1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(80px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, 70px) scale(0.95); }
+    }
+
+    @keyframes driftGlow2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-70px, -50px) scale(1.1); }
+      100% { transform: translate(50px, -30px) scale(0.92); }
+    }
+
+    .backdrop-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      mix-blend-mode: overlay;
+      pointer-events: none;
     }
 
     /* Ambient Ember Particles Canvas */
@@ -89,8 +176,8 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
-      opacity: 0.75;
+      z-index: 2;
+      opacity: 0.85;
     }
 
     /* Stage Container (Cinematic Hero ↔ Section 2 at top) */
@@ -99,7 +186,7 @@
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      z-index: 2;
+      z-index: 5;
     }
 
     .stage {
@@ -602,6 +689,7 @@
       display: block;
     }
 
+    /* Section 2 3-Card Row: Nestify, StudyForge, Neon Tether */
     .s2-cards {
       position: absolute;
       left: calc(704 * var(--u));
@@ -723,7 +811,7 @@
     .portfolio-content {
       position: relative;
       z-index: 10;
-      background-color: var(--deep);
+      background-color: transparent;
       padding-top: 40px;
     }
 
@@ -786,7 +874,7 @@
       margin-bottom: 56px;
     }
 
-    /* Section 3: Selected Work (Projects Grid) */
+    /* Section 3: Selected Work (Rebalanced 3-Project Grid: Featured + 2 Cards) */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -816,6 +904,23 @@
       transform: translateY(-6px);
       border-color: rgba(197, 121, 75, 0.4);
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 24px rgba(197, 121, 75, 0.12);
+    }
+
+    /* Featured Top Project Card (Nestify) */
+    .project-card-featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      min-height: 380px;
+    }
+
+    .project-card-featured .card-media {
+      height: 100%;
+      min-height: 340px;
+    }
+
+    .project-card-featured .card-content {
+      padding: 40px;
     }
 
     /* Dynamic cursor spotlight glow */
@@ -1226,6 +1331,13 @@
       .projects-grid {
         grid-template-columns: 1fr;
       }
+      .project-card-featured {
+        grid-template-columns: 1fr;
+      }
+      .project-card-featured .card-media {
+        height: 240px;
+        min-height: auto;
+      }
       .arsenal-grid {
         grid-template-columns: 1fr;
       }
@@ -1408,6 +1520,12 @@
       .stage.rm.is-s2 .plate-s2 {
         opacity: 1 !important;
       }
+      .backdrop-glow {
+        animation: none !important;
+      }
+      #emberCanvas {
+        display: none !important;
+      }
       .section-heading, .project-card, .arsenal-col, .credential-card, .contact-card {
         opacity: 1 !important;
         transform: none !important;
@@ -1419,6 +1537,15 @@
 <body>
   <!-- Scroll Progress Indicator -->
   <div id="scrollProgress"></div>
+
+  <!-- Persistent Atmospheric Backdrop for Scrollable Sections -->
+  <div class="portfolio-backdrop" id="portfolioBackdrop" aria-hidden="true">
+    <div class="backdrop-plate" id="backdropPlate"></div>
+    <div class="backdrop-vignette"></div>
+    <div class="backdrop-glow glow-1" id="backdropGlow1"></div>
+    <div class="backdrop-glow glow-2" id="backdropGlow2"></div>
+    <div class="backdrop-grain"></div>
+  </div>
 
   <!-- Ambient Ember Canvas -->
   <canvas id="emberCanvas"></canvas>
@@ -1617,6 +1744,7 @@
           </svg>
         </a>
 
+        <!-- Section 2 3-Card Row: Nestify, StudyForge, Neon Tether -->
         <div class="s2-cards">
           <a href="https://nestify-4935.onrender.com/" target="_blank" rel="noopener" class="s2-card s2-card-1">
             <div class="card-img" style="background-position: 0 0;"></div>
@@ -1628,10 +1756,10 @@
             <div class="card-gradient"></div>
             <span class="card-label">StudyForge</span>
           </a>
-          <a href="https://circularai.streamlit.app" target="_blank" rel="noopener" class="s2-card s2-card-3">
+          <a href="https://vineetinamdarr.github.io/Neon-Tether/" target="_blank" rel="noopener" class="s2-card s2-card-3">
             <div class="card-img" style="background-position: 0 100%;"></div>
             <div class="card-gradient"></div>
-            <span class="card-label">Circular AI</span>
+            <span class="card-label">Neon Tether</span>
           </a>
         </div>
 
@@ -1647,7 +1775,7 @@
 
   <!-- Scrollable Portfolio Content Below Stage -->
   <div class="portfolio-content">
-    <!-- Section 3: Selected Work -->
+    <!-- Section 3: Selected Work (Clean 3-Project Showcase) -->
     <section class="portfolio-section reveal-section" id="selected-work">
       <div class="section-eyebrow">01 / SELECTED WORK</div>
       <div class="section-heading-mask">
@@ -1656,8 +1784,8 @@
       <p class="section-subtext">Production-grade backend pipelines, responsive full-stack tools, and algorithmic systems engineered with disciplined software patterns.</p>
 
       <div class="projects-grid">
-        <!-- Project 1: Nestify -->
-        <article class="project-card reveal-item">
+        <!-- Project 1: Nestify (Featured Full-Width Card) -->
+        <article class="project-card project-card-featured reveal-item">
           <div class="card-media">
             <div class="card-media-bg" style="background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261123_061140_b66e0e91-d128-4f2f-9076-3a6fee12924e.png&w=1024&q=85'); background-position: 0 0;"></div>
             <div class="card-media-overlay"></div>
@@ -1687,7 +1815,7 @@
             <div class="card-media-overlay"></div>
           </div>
           <div class="card-content">
-            <span class="card-badge">Physics & Audio Simulation</span>
+            <span class="card-badge">Physics &amp; Audio Simulation</span>
             <h3 class="card-title">Neon Tether: Velocity Overdrive</h3>
             <p class="card-desc">Single-file HTML5 Canvas and Web Audio physics grappling browser game with procedural synth audio and momentum mechanics.</p>
             <div class="tech-pills">
@@ -1722,29 +1850,6 @@
             <div class="card-actions">
               <a href="https://vineetinamdarr.github.io/StudyForge" target="_blank" rel="noopener" class="btn-copper">Launch App ↗</a>
               <a href="https://github.com/vineetinamdarr/StudyForge" target="_blank" rel="noopener" class="btn-secondary">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 4: Circular Smart Recycling -->
-        <article class="project-card reveal-item">
-          <div class="card-media">
-            <div class="card-media-bg" style="background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261123_061140_b66e0e91-d128-4f2f-9076-3a6fee12924e.png&w=1024&q=85'); background-position: 0 100%;"></div>
-            <div class="card-media-overlay"></div>
-          </div>
-          <div class="card-content">
-            <span class="card-badge">Hackathon Prototype • Code Clash 2.0</span>
-            <h3 class="card-title">Circular Smart Recycling</h3>
-            <p class="card-desc">Threshold-triggered waste monitoring and automated calendar scheduling prototype built in 48 hours at Code Clash 2.0 (DSU).</p>
-            <div class="tech-pills">
-              <span class="tech-pill">Python</span>
-              <span class="tech-pill">Streamlit</span>
-              <span class="tech-pill">Automation</span>
-              <span class="tech-pill">Data Pipelines</span>
-            </div>
-            <div class="card-actions">
-              <a href="https://circularai.streamlit.app" target="_blank" rel="noopener" class="btn-copper">Streamlit App ↗</a>
-              <a href="https://github.com/vineetinamdarr" target="_blank" rel="noopener" class="btn-secondary">GitHub ↗</a>
             </div>
           </div>
         </article>
@@ -1802,8 +1907,8 @@
               <div class="skill-desc">Serverless cloud relational database management, schema normalization &amp; indexing.</div>
             </div>
             <div class="skill-item">
-              <div class="skill-name">Streamlit</div>
-              <div class="skill-desc">Interactive data dashboards, reactive data visualization &amp; rapid full-stack prototyping.</div>
+              <div class="skill-name">RESTful Architectures</div>
+              <div class="skill-desc">Structured API endpoints, dependency injection, CORS handling &amp; JWT authentication patterns.</div>
             </div>
           </div>
         </div>
@@ -1928,12 +2033,10 @@
        RUNTIME ENGINE: MOUNDS CLEANUP, VIDEO CACHE, LOAD SEQUENCE & TRANSITIONS
        ========================================================================== */
 
-    // Easings as defined in spec
     const QOUT = 'cubic-bezier(.25, 1, .5, 1)';
     const COUT = 'cubic-bezier(.33, 1, .68, 1)';
     const CIN = 'cubic-bezier(.32, 0, .67, 0)';
 
-    // DOM References
     const stage = document.querySelector('.stage');
     const plateH1 = document.querySelector('.plate-h1');
     const plateS2 = document.querySelector('.plate-s2');
@@ -1957,13 +2060,15 @@
     const s2Arrow = document.querySelector('.s2-arrow');
     const s2Cards = Array.from(document.querySelectorAll('.s2-card'));
     const mainNav = document.getElementById('mainNav');
+    const portfolioBackdrop = document.getElementById('portfolioBackdrop');
+    const backdropPlate = document.getElementById('backdropPlate');
+    const backdropGlow1 = document.getElementById('backdropGlow1');
+    const backdropGlow2 = document.getElementById('backdropGlow2');
 
-    // State Tracking
     let currentState = 1; // 1 = Hero, 2 = Section 2
     let isLocked = true;  // Input locked during animations / initial load
     let runningAnimations = [];
 
-    // Lock page scrolling initially while in Hero
     document.documentElement.style.overflowY = 'hidden';
     document.body.style.overflowY = 'hidden';
 
@@ -1980,9 +2085,7 @@
       runningAnimations = [];
     }
 
-    /* ==========================================================================
-       SECTION 5: MOUNDS GREEN EDGE CLEAN-UP (RUNTIME)
-       ========================================================================== */
+    /* SECTION 5: MOUNDS GREEN EDGE CLEAN-UP */
     function cleanMoundsImage(imgElement) {
       return new Promise((resolve) => {
         function smoothstep(min, max, value) {
@@ -2042,9 +2145,7 @@
       });
     }
 
-    /* ==========================================================================
-       SECTION 6: CAMERA CLIP FRAME CACHE & SCRUBBING
-       ========================================================================== */
+    /* SECTION 6: CAMERA CLIP FRAME CACHE & SCRUBBING */
     const cameraFrames = [];
     const decodedBitmaps = new Map();
     const decodingIndices = new Set();
@@ -2468,9 +2569,7 @@
 
     setTimeout(loadCameraFrames, 1200);
 
-    /* ==========================================================================
-       SECTION 7: LOAD SEQUENCE
-       ========================================================================== */
+    /* SECTION 7: LOAD SEQUENCE */
     function startIntro() {
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       stage.classList.remove('pre');
@@ -2532,9 +2631,7 @@
 
     Promise.all([pFonts, pHero, pMounds]).then(triggerIntro).catch(triggerIntro);
 
-    /* ==========================================================================
-       SECTION 8: SCROLL TRANSITION — HERO TO SECTION 2
-       ========================================================================== */
+    /* SECTION 8: SCROLL TRANSITION — HERO TO SECTION 2 */
     function generateS2InKeyframes(vh) {
       const frames = [];
       for (let k = 0; k <= 54; k++) {
@@ -2568,6 +2665,7 @@
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (isReduced) {
         stage.classList.add('is-s2');
+        if (portfolioBackdrop) portfolioBackdrop.classList.add('is-visible');
         currentState = 2;
         isLocked = false;
         document.documentElement.style.overflowY = 'auto';
@@ -2576,7 +2674,6 @@
         return;
       }
 
-      // Hero Out
       trackAnim(titleInner.animate([{ transform: 'none' }, { transform: 'translateY(-100%)' }], { delay: 0, duration: 280, easing: CIN, fill: 'both' }));
       trackAnim(bodyInner.animate([{ transform: 'none' }, { transform: 'translateY(100%)' }], { delay: 50, duration: 250, easing: CIN, fill: 'both' }));
 
@@ -2594,7 +2691,6 @@
       trackAnim(moundL.animate([{ transform: 'none' }, { transform: 'translateX(-51%)' }], { delay: 20, duration: 560, easing: CIN, fill: 'both' }));
       trackAnim(moundR.animate([{ transform: 'none' }, { transform: 'translateX(51%)' }], { delay: 150, duration: 450, CIN, fill: 'both' }));
 
-      // Section 2 In
       const vh = window.innerHeight;
       const s2Keyframes = generateS2InKeyframes(vh);
       const s2Elements = [s2Title, s2Para, s2Arrow, s2Cards[0], s2Cards[1], s2Cards[2]];
@@ -2611,12 +2707,11 @@
         }
       });
 
-      // Camera forward
       runCamera(true, 550, 1700);
 
-      // Lock release & unlock document scrolling
       setTimeout(() => {
         stage.classList.add('is-s2');
+        if (portfolioBackdrop) portfolioBackdrop.classList.add('is-visible');
         currentState = 2;
         isLocked = false;
         document.documentElement.style.overflowY = 'auto';
@@ -2625,9 +2720,7 @@
       }, 2300);
     }
 
-    /* ==========================================================================
-       SECTION 9: SCROLL TRANSITION — SECTION 2 BACK TO HERO
-       ========================================================================== */
+    /* SECTION 9: SCROLL TRANSITION — SECTION 2 BACK TO HERO */
     function generateS2OutKeyframes(vh) {
       const frames = [];
       for (let k = 0; k <= 54; k++) {
@@ -2655,6 +2748,7 @@
       isLocked = true;
       document.documentElement.style.overflowY = 'hidden';
       document.body.style.overflowY = 'hidden';
+      if (portfolioBackdrop) portfolioBackdrop.classList.remove('is-visible');
       cancelRunningAnimations();
 
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2708,9 +2802,7 @@
       }, 2300);
     }
 
-    /* ==========================================================================
-       USER INPUT TRIGGERS: WHEEL, TOUCH, KEYBOARD, NAV & UNLOCK
-       ========================================================================== */
+    /* USER INPUT TRIGGERS: WHEEL, TOUCH, KEYBOARD & NAV */
     window.addEventListener('wheel', (e) => {
       if (isLocked) {
         e.preventDefault();
@@ -2722,7 +2814,6 @@
           transitionToS2();
         }
       } else if (currentState === 2) {
-        // At top of page and wheeling up -> return to Hero
         if (window.scrollY <= 0 && e.deltaY < -4) {
           e.preventDefault();
           transitionToHero();
@@ -2784,7 +2875,6 @@
       }
     });
 
-    // Navigation Click Handlers
     function scrollToElement(elId) {
       const el = document.getElementById(elId);
       if (!el) return;
@@ -2868,7 +2958,6 @@
       });
     }
 
-    // Mobile Drawer Controls
     const mobileDrawer = document.getElementById('mobileDrawer');
     const menuToggle = document.getElementById('menuToggle');
     const drawerClose = document.getElementById('drawerClose');
@@ -2904,9 +2993,7 @@
       });
     });
 
-    /* ==========================================================================
-       SCROLL PROGRESS & NAVBAR SCROLLED STATE
-       ========================================================================== */
+    /* SCROLL PROGRESS, PARALLAX BACKDROP & NAVBAR SCROLLED STATE */
     const progressBar = document.getElementById('scrollProgress');
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
@@ -2921,11 +3008,31 @@
           mainNav.classList.remove('nav-scrolled');
         }
       }
+
+      // Parallax shifts on persistent background
+      if (portfolioBackdrop) {
+        if (scrollY > 10 || currentState === 2) {
+          portfolioBackdrop.classList.add('is-visible');
+        } else {
+          portfolioBackdrop.classList.remove('is-visible');
+        }
+      }
+
+      if (backdropPlate) {
+        const translateY = scrollY * 0.06;
+        backdropPlate.style.transform = `scale(1.08) translateY(${translateY}px)`;
+      }
+      if (backdropGlow1) {
+        const driftY = scrollY * 0.04;
+        backdropGlow1.style.transform = `translateY(${driftY}px)`;
+      }
+      if (backdropGlow2) {
+        const driftY = -scrollY * 0.035;
+        backdropGlow2.style.transform = `translateY(${driftY}px)`;
+      }
     }, { passive: true });
 
-    /* ==========================================================================
-       INTERSECTION OBSERVER FOR SCROLL REVEALS
-       ========================================================================== */
+    /* INTERSECTION OBSERVER FOR SCROLL REVEALS */
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -2941,9 +3048,7 @@
       revealObserver.observe(el);
     });
 
-    /* ==========================================================================
-       COPPER EMBER CURSOR GLOW
-       ========================================================================== */
+    /* COPPER EMBER CURSOR GLOW */
     document.querySelectorAll('.project-card, .arsenal-col, .credential-card, .contact-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -2958,9 +3063,7 @@
       });
     });
 
-    /* ==========================================================================
-       AMBIENT EMBER PARTICLES CANVAS
-       ========================================================================== */
+    /* AMBIENT EMBER PARTICLES CANVAS (60FPS FLICKERING COPPER EMBERS) */
     const emberCanvas = document.getElementById('emberCanvas');
     if (emberCanvas) {
       const ctx = emberCanvas.getContext('2d');
@@ -2973,45 +3076,45 @@
       }, { passive: true });
 
       const particles = [];
-      const particleCount = 38;
+      const particleCount = 42;
 
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          radius: Math.random() * 1.6 + 0.6,
-          speedY: Math.random() * 0.45 + 0.18,
+          radius: Math.random() * 1.8 + 0.6,
+          speedY: Math.random() * 0.5 + 0.2,
           speedX: (Math.random() - 0.5) * 0.35,
-          alpha: Math.random() * 0.5 + 0.2,
+          alpha: Math.random() * 0.55 + 0.25,
           phase: Math.random() * Math.PI * 2,
-          isWhite: Math.random() < 0.15
+          isWhite: Math.random() < 0.12
         });
       }
 
       function renderEmbers() {
         ctx.clearRect(0, 0, w, h);
 
-        // Only draw embers when scrolled past or in S2 to conserve GPU during Hero
-        if (currentState === 2 || window.scrollY > 0) {
+        const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!isReduced && (currentState === 2 || window.scrollY > 0)) {
           for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
             p.y -= p.speedY;
-            p.x += Math.sin(p.phase) * 0.4 + p.speedX;
-            p.phase += 0.02;
+            p.x += Math.sin(p.phase) * 0.45 + p.speedX;
+            p.phase += 0.022;
 
             if (p.y < -10) {
               p.y = h + 10;
               p.x = Math.random() * w;
             }
 
-            const currentAlpha = p.alpha * (0.7 + 0.3 * Math.sin(p.phase * 2));
+            const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(p.phase * 2));
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fillStyle = p.isWhite
               ? `rgba(237, 227, 218, ${currentAlpha})`
               : `rgba(197, 121, 75, ${currentAlpha})`;
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(197, 121, 75, 0.45)';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(197, 121, 75, 0.5)';
             ctx.fill();
           }
         }
